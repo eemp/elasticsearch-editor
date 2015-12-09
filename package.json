@@ -1,0 +1,28 @@
+{
+  "name": "elasticsearch-scribe",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "elasticsearch",
+    "scribe",
+    "record",
+    "document",
+    "editor"
+  ],
+  "author": "eemp",
+  "license": "Apache2",
+  "dependencies": {
+    "elasticsearch": "^10.0.1",
+    "react": "^0.14.3",
+    "react-ace": "^2.8.0",
+    "react-dom": "^0.14.3"
+  },
+  "devDependencies": {
+    "bower": "^1.7.0",
+    "express": "^4.13.3"
+  }
+}
