@@ -15,9 +15,9 @@ class Document extends React.Component {
 
     render() {
         return (
-            <div id="doc">
+            <section id="doc">
                 <p>{this.state.msg}</p>
-            </div>
+            </section>
         );
     }
 }
