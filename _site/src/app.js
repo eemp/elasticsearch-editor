@@ -1,10 +1,21 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-var Header = require('./header');
-var Document = require('./doc');
+const Header = require('./header');
+const Document = require('./doc');
 
 class App extends React.Component {
+    componentDidMount() {
+        $(document).on('scroll', function() {
+            let header = $('header');
+            let container = $('#app-container');
+
+            console.log(header.offset().top, container.offset().top);
+            if(header.offset().top > container.offset().top) header.addClass('shrink');
+            else header.removeClass('shrink');
+        });
+    }
+
     render() {
         return (
             <div id="app">
@@ -17,6 +28,6 @@ class App extends React.Component {
 
 render(
     <App/>,
-    document.getElementById('react-container')
+    document.getElementById('app-container')
 );
 
