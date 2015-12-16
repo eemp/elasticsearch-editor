@@ -1,0 +1,43 @@
+{
+    "analysis" : {
+        "char_filter" : {
+            "test_cfilter" : {
+                "type" : "mapping",
+                "mappings" : [
+                    "ph=>f",
+                    "qu=>k"
+                ]
+            }
+        },
+        "filter" : {
+            "test_filter" : {
+                "type" : "length",
+                "min" : 5,
+                "max" : 8
+            }
+        },
+        "analyzer" : {
+            "test_analyzer1" : {
+                "type" : "custom",
+                "tokenizer" : "standard",
+                "char_filter" : [
+                    "test_cfilter"
+                ],
+                "filter" : [
+                    "standard",
+                    "lowercase",
+                    "test_filter"
+                ]
+            },
+            "test_analyzer2" : {
+                "type" : "custom",
+                "tokenizer" : "standard",
+                "filter" : [
+                    "standard",
+                    "lowercase",
+                    "asciifolding"
+                ]
+            }
+        }
+    }
+}

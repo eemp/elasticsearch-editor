@@ -1,0 +1,14 @@
+{
+    "test-mapping-1" : {
+        "properties" : {
+            "name" : {
+                "type" : "string",
+                "index" : "not_analyzed"
+            },
+            "description" : {
+                "type" : "string",
+                "analyzer" : "snowball"
+            }
+        }
+    }
+}
