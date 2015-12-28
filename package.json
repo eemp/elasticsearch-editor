@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch-js": "watchify -t [ babelify --presets [ react es2015 ] ] _site/src/app.js  -o _site/build/bundle.js",
+    "watch-js": "watchify -t [ babelify --presets [ react es2015 ] ] _site/src/index.js  -o _site/build/bundle.js",
     "watch-css": "node-sass --watch _site/sass --output _site/css",
     "watch": "npm run watch-css && npm run watch-js",
-    "build-js": "browserify -t [ babelify --presets [ react es2015 ] ] _site/src/app.js  -o _site/build/bundle.js",
+    "build-js": "browserify -t [ babelify --presets [ react es2015 ] ] _site/src/index.js  -o _site/build/bundle.js",
     "build-css": "node-sass _site/sass --output _site/css",
     "build": "npm run build-css && npm run build-js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -26,7 +26,10 @@
     "react": "^0.14.3",
     "react-ace": "^2.8.0",
     "react-dom": "^0.14.3",
-    "react-tabs": "^0.5.1"
+    "react-redux": "^4.0.5",
+    "react-tabs": "^0.5.1",
+    "redux": "^3.0.5",
+    "redux-thunk": "^1.0.3"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.3.13",

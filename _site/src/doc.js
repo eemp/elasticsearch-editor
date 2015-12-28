@@ -49,21 +49,21 @@ class Document extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: editor_demo_data,
+            data: this.props.data || editor_demo_data,
             mapping: editor_demo_mapping,
         };
     }
 
     componentDidMount() {
         this.setState({
-            data: editor_demo_data,
+            data: this.props.data || editor_demo_data,
             mapping: editor_demo_mapping,
         });
     }
 
     render() {
         let self = this;
-
+        
         return (
             <section id="doc">
                 <Tabs selectedIndex={0}>
@@ -80,7 +80,7 @@ class Document extends React.Component {
                             height="79vh"
                             showPrintMargin={false}
                             editorProps={{$blockScrolling: true}}
-                            value={JSON.stringify(self.state.data, null, 4)}
+                            value={JSON.stringify(self.props.data || self.state.data, null, 4)}
                         />
                     </TabPanel>
                     <TabPanel>
