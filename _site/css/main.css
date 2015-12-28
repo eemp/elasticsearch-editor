@@ -55,7 +55,7 @@ nav ul li.no-bg:hover {
   /* icon prefix focus color */ }
   .scribe-opts .row {
     margin-left: 175px;
-    margin-right: 0;
+    margin-right: 10px;
     margin-bottom: 0; }
   .scribe-opts .input-field input {
     padding-left: 0; }
