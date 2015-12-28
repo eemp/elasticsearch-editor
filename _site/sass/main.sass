@@ -1,6 +1,8 @@
 $text-color: blue 
 $max-z-index: 9999
 $header-transition: all 0.4s ease-in-out
+$label-transform: translateY(-35%)
+$nav-input-color: #fff
 
 =transition($t)
   -webkit-transition: $t
@@ -9,20 +11,23 @@ $header-transition: all 0.4s ease-in-out
   -o-transition: $t
   transition: $t
 
-=valign($position: relative)
-  position: $position;
-  transform: translateY(50%)
-  -ms-transform:translateY(50%)
-  -moz-transform:translateY(50%)
-  -webkit-transform:translateY(50%)
-  -o-transform:translateY(50%)
+=transform($t)
+  transform: $t
+  -ms-transform: $t
+  -moz-transform: $t
+  -webkit-transform: $t
+  -o-transform: $t
 
-=nouserselect()
-  -webkit-user-select: none; 
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none;
+=userselect($s)
+  -webkit-user-select: $s
+  -moz-user-select: $s
+  -ms-user-select: $s
+  -o-user-select: $s
+  user-select: $s
+
+=valign($position: relative)
+  position: $position
+  +transform(translateY(50%))
 
 body
   padding-top: 12vh
@@ -41,10 +46,10 @@ header div
   margin-right: auto
 
 .brand-logo
-  font-family: 'Poiret One', serif;
-  font-weight: 700;
-  letter-spacing: 3px;
-  +nouserselect()
+  font-family: 'Poiret One', serif
+  font-weight: 700
+  letter-spacing: 3px
+  +userselect(none)
 
 @media only screen and (min-width: 601px)
   .shrink nav,.shrink .nav-wrapper i
@@ -61,4 +66,39 @@ header div
 #editor
   border: 1px solid #ddd
   border-radius: 3px
+
+nav ul li.no-bg:hover
+  background-color: transparent
+
+/* recolor nav inputs */
+.scribe-opts
+  .row
+    margin-left: 175px;
+    margin-right: 0;
+    margin-bottom: 0;
+
+  .input-field input
+    padding-left: 0
+
+  /* label color */
+  .input-field label
+    color: $nav-input-color
+    font-weight: 500
+
+  .input-field label.active
+    +transform($label-transform)
+
+  /* label focus color */
+  .input-field input[type=text]:focus + label
+    color: $nav-input-color
+
+  /* label underline focus color */
+  .input-field input[type=text]:focus
+    border-bottom: 1px solid $nav-input-color
+    box-shadow: 0 1px 0 0 $nav-input-color
+
+  /* icon prefix focus color */
+  .input-field .prefix.active
+    color: $nav-input-color
+
 

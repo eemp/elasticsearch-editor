@@ -43,3 +43,35 @@ header div {
 #editor {
   border: 1px solid #ddd;
   border-radius: 3px; }
+
+nav ul li.no-bg:hover {
+  background-color: transparent; }
+
+/* recolor nav inputs */
+.scribe-opts {
+  /* label color */
+  /* label focus color */
+  /* label underline focus color */
+  /* icon prefix focus color */ }
+  .scribe-opts .row {
+    margin-left: 175px;
+    margin-right: 0;
+    margin-bottom: 0; }
+  .scribe-opts .input-field input {
+    padding-left: 0; }
+  .scribe-opts .input-field label {
+    color: #fff;
+    font-weight: 500; }
+  .scribe-opts .input-field label.active {
+    transform: translateY(-35%);
+    -ms-transform: translateY(-35%);
+    -moz-transform: translateY(-35%);
+    -webkit-transform: translateY(-35%);
+    -o-transform: translateY(-35%); }
+  .scribe-opts .input-field input[type=text]:focus + label {
+    color: #fff; }
+  .scribe-opts .input-field input[type=text]:focus {
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff; }
+  .scribe-opts .input-field .prefix.active {
+    color: #fff; }

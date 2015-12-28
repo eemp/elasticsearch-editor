@@ -6,6 +6,10 @@ class Header extends React.Component {
         $(".button-collapse").sideNav();
     }
 
+    handleSearch() {
+        alert('search');
+    }
+
     render() {
         return (
             <header>
@@ -14,7 +18,21 @@ class Header extends React.Component {
                         <a className="brand-logo">{"{ Scribe }"}</a>
                         <a href="#" data-activates="mobile-nav" className="button-collapse"><i className="material-icons">menu</i></a>
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
-                            <li><a><i className="material-icons">search</i></a></li>
+                            <li className="no-bg">
+                                <form className="scribe-opts right col s12">
+                                    <div className="row">
+                                        <div className="input-field col s8">
+                                            <input id="mapping" type="text" required></input>
+                                            <label className="active" htmlFor="mapping">Type</label>
+                                        </div>
+                                        <div className="input-field col s4">
+                                            <input id="doc-id" type="text" required></input>
+                                            <label className="active" htmlFor="doc-id">ID</label>
+                                        </div>
+                                    </div>
+                                </form>
+                            </li>
+                            <li><a href="#" onClick={this.handleSearch}><i className="material-icons">search</i></a></li>
                             <li><a><i className="material-icons">refresh</i></a></li>
                             <li><a><i className="material-icons">done</i></a></li>
                             <li><a><i className="material-icons">more_vert</i></a></li>
