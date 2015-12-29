@@ -23,7 +23,7 @@ class App extends React.Component {
 
         return (
             <div id="app" >
-                <Header id={this.props.id} type={this.props.type} handleSaveClick={data => 
+                <Header {...this.props} handleSaveClick={data => 
                     dispatch(saveDocument(this.props.type, this.props.id, data))
                 } handleFetchClick={(index, type, id) => 
                     dispatch(getDocument(index, type, id))

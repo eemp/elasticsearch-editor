@@ -15,6 +15,10 @@ class Header extends React.Component {
         this.props.handleFetchClick(this.refs.index.value, this.refs.type.value, this.refs.id.value);
     }
 
+    handleRefresh() {
+        this.props.handleFetchClick(this.props.index, this.props.type, this.props.id);
+    }
+
     render() {
         // TODO: removed hardcoded default values for type and id inputs
         return (
@@ -48,7 +52,7 @@ class Header extends React.Component {
                         <a href="#" data-activates="mobile-nav" className="button-collapse"><i className="material-icons">menu</i></a>
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li><a href="#" className="dropdown-button" data-activates="search-dropdown"><i className="material-icons">search</i></a></li>
-                            <li><a><i className="material-icons">refresh</i></a></li>
+                            <li><a href="#" onClick={this.handleRefresh.bind(this)}><i className="material-icons">refresh</i></a></li>
                             <li><a><i className="material-icons">done</i></a></li>
                             <li><a><i className="material-icons">more_vert</i></a></li>
                         </ul>
