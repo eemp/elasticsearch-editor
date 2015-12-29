@@ -4,10 +4,14 @@ Elasticsearch site plugin to edit JSON records
 ## Roadmap
 
 * basic functionality
- * react router stuff to handle routes based on `localhost:9200/_site/scribe/my-idx/my-mapping/my-doc`
- * display docs with ace editor
- * basic index functionality
- * nice interface
+ * pull and display mapping
+ * remove a lot of hardcoded dummy data
+ * handle blank slate cases
+ * action log
+ * error handling
+  * insufficient information specified
+  * fail to retrieve doc
+  * fail to save
 * enhancements
  * enforce versions
  * merges
