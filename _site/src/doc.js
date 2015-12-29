@@ -49,16 +49,24 @@ class Document extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: this.props.data || editor_demo_data,
+            doc: this.props.doc || editor_demo_data,
             mapping: editor_demo_mapping,
         };
     }
 
     componentDidMount() {
         this.setState({
-            data: this.props.data || editor_demo_data,
+            doc: this.props.doc || editor_demo_data,
             mapping: editor_demo_mapping,
         });
+    }
+
+    shouldComponentUpdate(nextProps) {
+        return this.props.id !== nextProps.id || nextProps.force;
+    }
+
+    handleChange(newValue) {
+        this.props.handleDocumentChange(newValue);
     }
 
     render() {
@@ -80,7 +88,9 @@ class Document extends React.Component {
                             height="79vh"
                             showPrintMargin={false}
                             editorProps={{$blockScrolling: true}}
-                            value={JSON.stringify(self.props.data || self.state.data, null, 4)}
+                            ref="doc"
+                            value={JSON.stringify(self.props.doc || self.state.doc, null, 4)}
+                            onChange={this.handleChange.bind(this)}
                         />
                     </TabPanel>
                     <TabPanel>

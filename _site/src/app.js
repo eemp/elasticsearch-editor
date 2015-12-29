@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Header from './header';
 import Document from './doc';
 
-import { getDocument, saveDocument, handleChange } from './actions';
+import { getDocument, saveDocument, handleDocumentChange } from './actions';
 
 class App extends React.Component {
     componentDidMount() {
@@ -20,16 +20,16 @@ class App extends React.Component {
 
     render() {
         let dispatch = this.props.dispatch;
-
+        
         return (
             <div id="app" >
                 <Header {...this.props} handleSaveClick={data => 
-                    dispatch(saveDocument(this.props.type, this.props.id, data))
+                    dispatch(saveDocument(this.props.index, this.props.type, this.props.id, data))
                 } handleFetchClick={(index, type, id) => 
                     dispatch(getDocument(index, type, id))
                 } />
-                <Document data={this.props.data} onChange={text =>
-                    dispatch(handleChange(this.props.text))
+                <Document {...this.props} handleDocumentChange={text =>
+                    dispatch(handleDocumentChange(text))
                 }/>
             </div>
         );
@@ -37,12 +37,14 @@ class App extends React.Component {
 }
 
 function select(state) {
+    var data = state.scribe || {};
     return {
-        index: state.scribe.index,
-        type: state.scribe.type,
-        id: state.scribe.id,
-        // cleandata: state.cleandata,
-        data: state.scribe.data,
+        index: data.index,
+        type: data.type,
+        id: data.id,
+        doc: data.doc,
+        changed_doc: data.changed_doc,
+        force: data.force,
     };
 }
 

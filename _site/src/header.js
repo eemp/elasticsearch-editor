@@ -11,12 +11,20 @@ class Header extends React.Component {
         });
     }
 
+    shouldComponentUpdate(nextProps) {
+        return this.props.id !== nextProps.id;
+    }
+
     handleSearch() {
         this.props.handleFetchClick(this.refs.index.value, this.refs.type.value, this.refs.id.value);
     }
 
     handleRefresh() {
         this.props.handleFetchClick(this.props.index, this.props.type, this.props.id);
+    }
+
+    handleSave() {
+        this.props.handleSaveClick(this.props.changed_doc);
     }
 
     render() {
@@ -53,7 +61,7 @@ class Header extends React.Component {
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li><a href="#" className="dropdown-button" data-activates="search-dropdown"><i className="material-icons">search</i></a></li>
                             <li><a href="#" onClick={this.handleRefresh.bind(this)}><i className="material-icons">refresh</i></a></li>
-                            <li><a><i className="material-icons">done</i></a></li>
+                            <li><a href="#" onClick={this.handleSave.bind(this)}><i className="material-icons">done</i></a></li>
                             <li><a><i className="material-icons">more_vert</i></a></li>
                         </ul>
                         <ul className="side-nav" id="mobile-nav">

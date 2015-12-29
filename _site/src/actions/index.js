@@ -1,4 +1,5 @@
 import elasticsearch from 'elasticsearch';
+import { GET_DOC, DOC_CHANGE, SAVE_DOC } from '../constants';
 
 let esclient = new elasticsearch.Client({
     host: 'localhost:9200', // TODO: avoid hardcoding
@@ -19,10 +20,20 @@ let defaultData = {
 
 function receiveDocument(response) {
     return {
-        index: response._index,
-        id: response._id,
-        type: response._type,
-        data: response._source,
+        type: GET_DOC,
+        data: {
+            index: response._index,
+            id: response._id,
+            type: response._type,
+            doc: response._source,
+        }
+    };
+}
+
+function receiveResponseToIndex(response) {
+    return {
+        type: SAVE_DOC,
+        data: {}
     };
 }
 
@@ -38,12 +49,37 @@ export function getDocument(index, type, id) {
     };
 }
 
-export function saveDocument(index, mapping, id, data) {
+export function saveDocument(index, type, id, text) {
+    var updatedDoc = JSON.parse(text);
+
+    return dispatch => {
+        return esclient.index({
+            index: index,
+            type: type,
+            id: id,
+            body: updatedDoc
+        }).then(res => {
+            dispatch(receiveResponseToIndex(res));
+        });
+    };
+
     return {
-        index: index,
-        type: mapping,
-        id: id,
-        data: data,
+        type: SAVE_DOC,
+        data: {
+            index: index,
+            type: mapping,
+            id: id,
+            doc: data,
+        }
+    };
+}
+
+export function handleDocumentChange(text) {
+    return {
+        type: DOC_CHANGE,
+        data: {
+            changed_doc: text,
+        }
     };
 }
 
