@@ -25,8 +25,8 @@ class App extends React.Component {
             <div id="app" >
                 <Header id={this.props.id} type={this.props.type} handleSaveClick={data => 
                     dispatch(saveDocument(this.props.type, this.props.id, data))
-                } handleFetchClick={(type, id) => 
-                    dispatch(getDocument(type, id))
+                } handleFetchClick={(index, type, id) => 
+                    dispatch(getDocument(index, type, id))
                 } />
                 <Document data={this.props.data} onChange={text =>
                     dispatch(handleChange(this.props.text))
@@ -38,8 +38,9 @@ class App extends React.Component {
 
 function select(state) {
     return {
-        id: state.scribe.id,
+        index: state.scribe.index,
         type: state.scribe.type,
+        id: state.scribe.id,
         // cleandata: state.cleandata,
         data: state.scribe.data,
     };

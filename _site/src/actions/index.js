@@ -1,7 +1,5 @@
 import elasticsearch from 'elasticsearch';
 
-let index = 'test-index'; // TODO: avoid hardcoding
-
 let esclient = new elasticsearch.Client({
     host: 'localhost:9200', // TODO: avoid hardcoding
 });
@@ -21,13 +19,14 @@ let defaultData = {
 
 function receiveDocument(response) {
     return {
+        index: response._index,
         id: response._id,
         type: response._type,
         data: response._source,
     };
 }
 
-export function getDocument(type, id) {
+export function getDocument(index, type, id) {
     return dispatch => {
         return esclient.get({
             index: index,
@@ -39,8 +38,9 @@ export function getDocument(type, id) {
     };
 }
 
-export function saveDocument(mapping, id, data) {
+export function saveDocument(index, mapping, id, data) {
     return {
+        index: index,
         type: mapping,
         id: id,
         data: data,

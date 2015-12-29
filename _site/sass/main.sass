@@ -2,7 +2,7 @@ $text-color: blue
 $max-z-index: 9999
 $header-transition: all 0.4s ease-in-out
 $label-transform: translateY(-35%)
-$nav-input-color: #fff
+$nav-input-color: #000
 
 =transition($t)
   -webkit-transition: $t
@@ -73,12 +73,18 @@ nav ul li.no-bg:hover
 /* recolor nav inputs */
 .scribe-opts
   .row
-    margin-left: 175px;
-    margin-right: 10px;
-    margin-bottom: 0;
+    margin-top: 20px
+
+  .last.row
+    margin-bottom: 0px
+
+  .button.row
+    margin-top: 0px
+    margin-bottom: 0px
 
   .input-field input
     padding-left: 0
+    color: $nav-input-color
 
   /* label color */
   .input-field label
@@ -87,6 +93,8 @@ nav ul li.no-bg:hover
 
   .input-field label.active
     +transform($label-transform)
+    text-decoration: underline
+    letter-spacing: 1px
 
   /* label focus color */
   .input-field input[type=text]:focus + label
