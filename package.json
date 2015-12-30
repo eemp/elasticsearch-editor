@@ -22,6 +22,7 @@
   "author": "eemp",
   "license": "Apache2",
   "dependencies": {
+    "brace": "^0.7.0",
     "elasticsearch": "^10.0.1",
     "react": "^0.14.3",
     "react-ace": "^2.8.0",

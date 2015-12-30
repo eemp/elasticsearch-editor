@@ -1,11 +1,23 @@
 import React from 'react'
 import { render } from 'react-dom'
 
+import ace from 'brace'
 import AceEditor from 'react-ace'
-import json_mode from 'react-ace/node_modules/brace/mode/json'
-import github_theme from 'react-ace/node_modules/brace/theme/github'
+import 'brace/mode/json'
+import 'brace/theme/github'
+
+import 'brace/ext/language_tools'
+let langTools = ace.acequire('ace/ext/language_tools');
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+
+/* add a custom mapping based completer */
+langTools.addCompleter({
+    getCompletions: function(editor, session, pos, prefix, callback) {
+        const TODO = 'TODO';
+        callback(null, [{name: TODO, value: TODO, score: 1, meta: TODO}]);
+    }
+});
 
 var editor_demo_data = {
     id: 1,
@@ -59,6 +71,8 @@ class Document extends React.Component {
             doc: this.props.doc || editor_demo_data,
             mapping: editor_demo_mapping,
         });
+
+        this.refs.doc.editor.setOption('enableBasicAutocompletion', true);
     }
 
     shouldComponentUpdate(nextProps) {
