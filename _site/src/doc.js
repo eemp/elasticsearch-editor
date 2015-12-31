@@ -19,57 +19,19 @@ langTools.addCompleter({
     }
 });
 
-var editor_demo_data = {
-    id: 1,
-    name: 'Hello, World!',
-    description: {
-        desc_type : 'greeting',
-        usage : 'first ever'
-    }
-},
-editor_demo_mapping = {
-    "properties" : {
-        "id" : {
-            "type" : "string",
-            "index" : "not_analyzed"
-        },
-        "name" : {
-            "type" : "string",
-            "analyzer" : "snowball"
-        },
-        "description" : {
-            "type" : "object",
-            "properties" : {
-                "desc_type" : {
-                    "type" : "string",
-                    "index" : "not_analyzed"
-                },
-                "usage" : {
-                    "type" : "string"
-                }
-            }
-        }
-    }
-};
-
-for(var k = 0; k < 1000; k++) {
-    var key = 'key_' + k;
-    editor_demo_data[key] = k;
-}
-
 class Document extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            doc: this.props.doc || editor_demo_data,
-            mapping: editor_demo_mapping,
+            doc: this.props.doc,
+            mapping: this.props.mapping,
         };
     }
 
     componentDidMount() {
         this.setState({
-            doc: this.props.doc || editor_demo_data,
-            mapping: editor_demo_mapping,
+            doc: this.props.doc,
+            mapping: this.props.mapping,
         });
 
         this.refs.doc.editor.setOption('enableBasicAutocompletion', true);
