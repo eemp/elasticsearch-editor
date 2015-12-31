@@ -34,19 +34,19 @@ class Header extends React.Component {
                 <form id="search-dropdown" className="scribe-opts dropdown-content col s12">
                     <div className="row">
                         <div className="input-field col s12">
-                            <input id="index" type="text" ref="index" defaultValue="test-index" required></input>
+                            <input id="index" type="text" ref="index" required></input>
                             <label className="active" htmlFor="index">Index</label>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s12">
-                            <input id="type" type="text" ref="type" defaultValue="test-mapping-1" required></input>
+                            <input id="type" type="text" ref="type" required></input>
                             <label className="active" htmlFor="type">Type</label>
                         </div>
                     </div>
                     <div className="last row">
                         <div className="input-field col s12">
-                            <input id="doc-id" type="text" ref="id" defaultValue="2" required></input>
+                            <input id="doc-id" type="text" ref="id" required></input>
                             <label className="active" htmlFor="doc-id">ID</label>
                         </div>
                     </div>
@@ -62,7 +62,6 @@ class Header extends React.Component {
                             <li><a href="#" className="dropdown-button" data-activates="search-dropdown"><i className="material-icons">search</i></a></li>
                             <li><a href="#" onClick={this.handleRefresh.bind(this)}><i className="material-icons">refresh</i></a></li>
                             <li><a href="#" onClick={this.handleSave.bind(this)}><i className="material-icons">done</i></a></li>
-                            <li><a><i className="material-icons">more_vert</i></a></li>
                         </ul>
                         <ul className="side-nav" id="mobile-nav">
                             <li><a>Search</a></li>
