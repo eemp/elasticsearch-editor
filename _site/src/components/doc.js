@@ -13,13 +13,10 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 
 import { INSTRUCTIONS } from '../constants'
 
-/* add a custom mapping based completer */
-langTools.addCompleter({
-    getCompletions: function(editor, session, pos, prefix, callback) {
-        const TODO = 'TODO';
-        callback(null, [{name: TODO, value: TODO, score: 1, meta: TODO}]);
-    }
-});
+import MappingPropsCompleter from '../completers/mapping_props'
+let mpc = new MappingPropsCompleter();
+let mappingBasedCompleter = mpc.aceCompleter();
+langTools.addCompleter(mappingBasedCompleter);
 
 class Document extends React.Component {
     componentDidMount() {
@@ -27,7 +24,14 @@ class Document extends React.Component {
     }
 
     shouldComponentUpdate(nextProps) {
-        return this.props.id !== nextProps.id || nextProps.force;
+        let updateFlag = (this.props.id !== nextProps.id || nextProps.force);
+        
+        /* add a custom mapping based completer */
+        if(updateFlag && nextProps.mapping) {
+            mpc.setMapping(nextProps.mapping);
+        }
+
+        return updateFlag;
     }
 
     handleChange(newValue) {
@@ -44,7 +48,7 @@ class Document extends React.Component {
                     width="97%"
                     height="79vh"
                     showPrintMargin={false}
-                    editorProps={{$blockScrolling: true}}
+                    editorProps={{$blockScrolling: Infinity}}
                     ref="doc"
                 />
             </TabPanel>
@@ -62,7 +66,7 @@ class Document extends React.Component {
                     height="79vh"
                     showPrintMargin={false}
                     readOnly={true}
-                    editorProps={{$blockScrolling: true}}
+                    editorProps={{$blockScrolling: Infinity}}
                     value={JSON.stringify(this.props.mapping, null, 4)}
                 />
             </TabPanel>
