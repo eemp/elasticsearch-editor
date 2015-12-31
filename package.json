@@ -7,7 +7,7 @@
     "watch-js": "watchify -t [ babelify --presets [ react es2015 ] ] _site/src/index.js  -o _site/build/bundle.js",
     "watch-css": "node-sass --watch _site/sass --output _site/css",
     "watch": "npm run watch-css && npm run watch-js",
-    "build-js": "browserify -t [ babelify --presets [ react es2015 ] ] _site/src/index.js  -o _site/build/bundle.js",
+    "build-js": "browserify -t [ babelify --presets [ react es2015 ] ] -g uglifyify _site/src/index.js  -o _site/build/bundle.js",
     "build-css": "node-sass _site/sass --output _site/css",
     "build": "npm run build-css && npm run build-js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -38,6 +38,7 @@
     "babelify": "^7.2.0",
     "bower": "^1.7.0",
     "express": "^4.13.3",
-    "node-sass": "^3.4.2"
+    "node-sass": "^3.4.2",
+    "uglifyify": "^3.0.1"
   }
 }
