@@ -2,10 +2,10 @@ import React from 'react';
 
 import { connect } from 'react-redux'
 
-import Header from './header';
-import Document from './doc';
+import Header from './components/header';
+import Document from './components/doc';
 
-import { getDocument, saveDocument, handleDocumentChange } from './actions';
+import { getDocument, getMapping, saveDocument, handleDocumentChange } from './actions';
 
 class App extends React.Component {
     componentDidMount() {
@@ -23,10 +23,14 @@ class App extends React.Component {
         
         return (
             <div id="app" >
-                <Header {...this.props} handleSaveClick={data => 
-                    dispatch(saveDocument(this.props.index, this.props.type, this.props.id, data))
-                } handleFetchClick={(index, type, id) => 
-                    dispatch(getDocument(index, type, id))
+                <Header {...this.props} handleSaveClick={(data) => {
+                        dispatch(saveDocument(this.props.index, this.props.type, this.props.id, data))
+                        dispatch(getMapping(index, type));
+                    }
+                } handleFetchClick={(index, type, id) => {
+                        dispatch(getDocument(index, type, id));
+                        dispatch(getMapping(index, type));
+                    }
                 } />
                 <Document {...this.props} handleDocumentChange={text =>
                     dispatch(handleDocumentChange(text))
@@ -43,6 +47,7 @@ function select(state) {
         type: data.type,
         id: data.id,
         doc: data.doc,
+        mapping: data.mapping,
         changed_doc: data.changed_doc,
         force: data.force,
     };

@@ -1,22 +1,9 @@
 import elasticsearch from 'elasticsearch';
-import { GET_DOC, DOC_CHANGE, SAVE_DOC } from '../constants';
+import { GET_DOC, GET_MAPPING, DOC_CHANGE, SAVE_DOC } from '../constants';
 
 let esclient = new elasticsearch.Client({
     host: 'localhost:9200', // TODO: avoid hardcoding
 });
-
-const type = 'scribetest';
-const id = '4ae2d32c';
-let defaultData = {
-    type: type,
-    id: id,
-    data: {
-        id: id,
-        type: type,
-        name: 'simple test',
-        description: 'this is a test',
-    }
-};
 
 function receiveDocument(response) {
     return {
@@ -30,10 +17,18 @@ function receiveDocument(response) {
     };
 }
 
+function receiveMapping(index, type, response) {
+    return {
+        type: GET_MAPPING,
+        data: {
+            mapping: response[index].mappings[type],
+        }
+    };
+}
+
 function receiveResponseToIndex(response) {
     return {
         type: SAVE_DOC,
-        data: {}
     };
 }
 
@@ -49,6 +44,17 @@ export function getDocument(index, type, id) {
     };
 }
 
+export function getMapping(index, type) {
+    return dispatch => {
+        return esclient.indices.getMapping({
+            index: index,
+            type: type,
+        }).then(res => {
+            dispatch(receiveMapping(index, type, res));
+        });
+    };
+}
+
 export function saveDocument(index, type, id, text) {
     var updatedDoc = JSON.parse(text);
 
@@ -60,17 +66,11 @@ export function saveDocument(index, type, id, text) {
             body: updatedDoc
         }).then(res => {
             dispatch(receiveResponseToIndex(res));
-        });
-    };
 
-    return {
-        type: SAVE_DOC,
-        data: {
-            index: index,
-            type: mapping,
-            id: id,
-            doc: data,
-        }
+            // TODO: assuming here that save succeeded
+            dispatch(getDocument(index, type, id));
+            dispatch(getMapping(index, type, id));
+        });
     };
 }
 

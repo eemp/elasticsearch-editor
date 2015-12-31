@@ -56,7 +56,7 @@ class Header extends React.Component {
                 </form>
                 <nav className="teal lighten-1">
                     <div className="nav-wrapper">
-                        <a className="brand-logo">{"{ Scribe }"}</a>
+                        <a className="brand-logo">{"{ editor }"}</a>
                         <a href="#" data-activates="mobile-nav" className="button-collapse"><i className="material-icons">menu</i></a>
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li><a href="#" className="dropdown-button" data-activates="search-dropdown"><i className="material-icons">search</i></a></li>
