@@ -1,5 +1,5 @@
 {
-  "name": "elasticsearch-scribe",
+  "name": "elasticsearch-editor",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -14,7 +14,7 @@
   },
   "keywords": [
     "elasticsearch",
-    "scribe",
+    "editor",
     "record",
     "document",
     "editor"
