@@ -1,6 +1,11 @@
 import elasticsearch from 'elasticsearch';
 import { GET_DOC, GET_MAPPING, DOC_CHANGE, SAVE_DOC } from '../constants';
 
+let host = 'localhost:9200'; // default
+if(document.location.href.match(/_plugin/)) { // actually a plugin
+    host = document.location.host;
+}
+
 let esclient = new elasticsearch.Client({
     host: 'localhost:9200', // TODO: avoid hardcoding
 });
