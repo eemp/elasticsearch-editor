@@ -1,10 +1,9 @@
-# elasticsearch-scribe
+# elasticsearch-editor
 Elasticsearch site plugin to edit JSON records
 
 ## Roadmap
 
 * basic functionality
- * mapping based completer for ace
  * action log
  * error handling
   * insufficient information specified
