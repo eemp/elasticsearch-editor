@@ -35,12 +35,13 @@ header div {
   .shrink .brand-logo {
     font-size: 1.5rem; } }
 
-#doc {
+#doc-tabs {
   width: 75%;
   margin-left: auto;
   margin-right: auto; }
 
-#editor {
+.ace_editor {
+  margin-top: 10px;
   border: 1px solid #ddd;
   border-radius: 3px; }
 

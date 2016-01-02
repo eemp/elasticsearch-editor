@@ -34,57 +34,76 @@ class Document extends React.Component {
         return updateFlag;
     }
 
+    componentDidUpdate() {
+        $('ul.tabs').tabs();
+    }
+
     handleChange(newValue) {
         this.props.handleDocumentChange(newValue);
     }
 
-    renderMainTab(props) {
-        return (
-            <TabPanel key="main">
+    renderDocTab(name, props) {
+        let tab = (
+            <li className="tab col s3" key="doc">
+                <a className="teal-text text-lighten-1" href="#doc">{name}</a>
+            </li>
+        );
+        let content = (
+            <div id="doc" className="col s12" key="doc">
                 <AceEditor
                     {...props}
                     theme="github"
-                    name="editor"
+                    name="doc-editor"
                     width="97%"
                     height="79vh"
                     showPrintMargin={false}
                     editorProps={{$blockScrolling: Infinity}}
                     ref="doc"
                 />
-            </TabPanel>
+            </div>
         );
+
+        return {
+            tab_li: tab,
+            tab_content: content,
+        };
     }
 
-    renderMappingTab() {
-        return (
-            <TabPanel key="mapping">
+    renderMappingTab(name) {
+        let tab = (
+            <li className="tab col s3" key="mapping">
+                <a href="#mapping" className="teal-text text-lighten-1">{name}</a>
+            </li>
+        );
+        let content = (
+            <div id="mapping" className="col s12" key="mapping">
                 <AceEditor
                     mode="json"
                     theme="github"
-                    name="editor"
+                    name="mapping-editor"
                     width="97%"
                     height="79vh"
                     showPrintMargin={false}
                     readOnly={true}
                     editorProps={{$blockScrolling: Infinity}}
-                    value={JSON.stringify(this.props.mapping, null, 4)}
+                    value={JSON.stringify(this.props.mapping, null, 2)}
                 />
-            </TabPanel>
+            </div>
         );
+        
+        return {
+            tab_li: tab,
+            tab_content: content,
+        };
     }
 
     render() {
         let self = this;
         
-        let tabs = [], panels = [];
-        let mainTabProps; // first/main tab info
+        let tabs = [], panels = [], tabInfo;
         
+        let mainTabProps; // first/main tab info
         if(self.props.doc) {
-            tabs.push(
-                <Tab key="main">
-                    {self.props.id}
-                </Tab>
-            );
             mainTabProps = {
                 value: JSON.stringify(self.props.doc, null, 2),
                 mode: 'json',
@@ -93,38 +112,36 @@ class Document extends React.Component {
             };
         }
         else {
-            tabs.push(
-                <Tab key="main">
-                    INFO
-                </Tab>
-            );
             mainTabProps = {
                 value: INSTRUCTIONS,
                 mode: 'text',
                 readOnly: true,
             }
         }
-
-        panels.push(self.renderMainTab(mainTabProps));
+        tabInfo = self.renderDocTab(self.props.id || 'INFO', mainTabProps);
+        tabs.push(tabInfo.tab_li);
+        panels.push(tabInfo.tab_content);
 
         if(self.props.mapping) {
-            tabs.push(
-                <Tab key="mapping">
-                    {self.props.type}
-                </Tab>
-            );
-            panels.push(self.renderMappingTab());
+            tabInfo = self.renderMappingTab(self.props.type);
+            tabs.push(tabInfo.tab_li);
+            panels.push(tabInfo.tab_content);
         }
 
+        tabs.push(
+            <div key="indicator" className="indicator teal lighten-1" style={{"zIndex": 1}}>
+            </div>
+        );
+
         return (
-            <section id="doc">
-                <Tabs selectedIndex={0}>
-                    <TabList>
+            <div id="doc-tabs" className="row">
+                <div className="col s12">
+                    <ul className="tabs">
                         {tabs}
-                    </TabList>
+                    </ul>
                     {panels}
-                </Tabs>
-            </section>
+                </div>
+            </div>
         );
     }
 }
