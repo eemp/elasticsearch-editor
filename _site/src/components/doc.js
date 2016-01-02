@@ -44,7 +44,7 @@ class Document extends React.Component {
                 <AceEditor
                     {...props}
                     theme="github"
-                    name="editor"
+                    name="doc-editor"
                     width="97%"
                     height="79vh"
                     showPrintMargin={false}
@@ -61,7 +61,7 @@ class Document extends React.Component {
                 <AceEditor
                     mode="json"
                     theme="github"
-                    name="editor"
+                    name="mapping-editor"
                     width="97%"
                     height="79vh"
                     showPrintMargin={false}
