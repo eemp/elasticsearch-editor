@@ -7,6 +7,10 @@ import Document from './components/doc';
 
 import { getDocument, getMapping, saveDocument, handleDocumentChange } from './actions';
 
+// following 2 lines necessary to make tabs work
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
 class App extends React.Component {
     componentDidMount() {
         $(document).on('scroll', function() {

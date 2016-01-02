@@ -1,6 +1,10 @@
 import React from 'react'
 import { render } from 'react-dom'
 
+import Paper from 'material-ui/lib/paper'
+import Tabs from 'material-ui/lib/tabs/tabs'
+import Tab from 'material-ui/lib/tabs/tab'
+
 import ace from 'brace'
 import AceEditor from 'react-ace'
 import 'brace/mode/json'
@@ -9,8 +13,6 @@ import 'brace/theme/github'
 import 'brace/ext/language_tools'
 let langTools = ace.acequire('ace/ext/language_tools');
 
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
-
 import { INSTRUCTIONS } from '../constants'
 
 import MappingPropsCompleter from '../completers/mapping_props'
@@ -18,12 +20,25 @@ let mpc = new MappingPropsCompleter();
 let mappingBasedCompleter = mpc.aceCompleter();
 langTools.addCompleter(mappingBasedCompleter);
 
+const activeTabStyles = {
+    backgroundColor: 'rgb(232,232,232)', 
+    color: 'rgba(0, 0, 0, .40)',
+}, inactiveTabStyles = {
+    backgroundColor: '#fff', 
+    color: 'rgba(0, 0, 0, .40)',
+};
+
 class Document extends React.Component {
+    constructor() {
+        super();
+        this.state = { tab: 'main' };
+    }
+    
     componentDidMount() {
-        this.refs.doc.editor.setOption('enableBasicAutocompletion', true);
+        this.refs.main.editor.setOption('enableBasicAutocompletion', true);
     }
 
-    shouldComponentUpdate(nextProps) {
+    shouldComponentUpdate(nextProps, nextState) {
         let updateFlag = (this.props.id !== nextProps.id || nextProps.force);
         
         /* add a custom mapping based completer */
@@ -38,93 +53,89 @@ class Document extends React.Component {
         this.props.handleDocumentChange(newValue);
     }
 
-    renderMainTab(props) {
+    renderInfoTab() {
         return (
-            <TabPanel key="main">
+            <Tab label="info" key="main" value="main" style={this.state.tab === 'main' ? activeTabStyles : inactiveTabStyles}>
                 <AceEditor
-                    {...props}
+                    value={INSTRUCTIONS}
+                    mode="text"
+                    readOnly={true}
                     theme="github"
-                    name="doc-editor"
-                    width="97%"
-                    height="79vh"
+                    name="info-editor"
+                    width="100%"
                     showPrintMargin={false}
                     editorProps={{$blockScrolling: Infinity}}
-                    ref="doc"
+                    ref="main"
                 />
-            </TabPanel>
+            </Tab>
+        );
+    }
+
+    renderDocTab() {
+        return (
+            <Tab label={this.props.id} key="main" value="main" style={this.state.tab === 'main' ? activeTabStyles : inactiveTabStyles}>
+                <AceEditor
+                    value={JSON.stringify(this.props.doc, null, 2)}
+                    mode="json"
+                    readOnly={false}
+                    onChange={this.handleChange.bind(this)}
+                    theme="github"
+                    name="doc-editor"
+                    width="100%"
+                    showPrintMargin={false}
+                    editorProps={{$blockScrolling: Infinity}}
+                    ref="main"
+                />
+            </Tab>
         );
     }
 
     renderMappingTab() {
         return (
-            <TabPanel key="mapping">
+            <Tab label={this.props.type} key="mapping" value="mapping" style={this.state.tab === 'mapping' ? activeTabStyles : inactiveTabStyles}>
                 <AceEditor
                     mode="json"
                     theme="github"
                     name="mapping-editor"
-                    width="97%"
-                    height="79vh"
+                    width="100%"
                     showPrintMargin={false}
                     readOnly={true}
                     editorProps={{$blockScrolling: Infinity}}
                     value={JSON.stringify(this.props.mapping, null, 4)}
                 />
-            </TabPanel>
+            </Tab>
         );
+    }
+
+    handleTabChange(val) {
+        this.setState({
+            tab: val
+        });
     }
 
     render() {
         let self = this;
-        
-        let tabs = [], panels = [];
-        let mainTabProps; // first/main tab info
-        
-        if(self.props.doc) {
-            tabs.push(
-                <Tab key="main">
-                    {self.props.id}
-                </Tab>
-            );
-            mainTabProps = {
-                value: JSON.stringify(self.props.doc, null, 2),
-                mode: 'json',
-                readOnly: false,
-                onChange: self.handleChange.bind(self),
-            };
-        }
-        else {
-            tabs.push(
-                <Tab key="main">
-                    INFO
-                </Tab>
-            );
-            mainTabProps = {
-                value: INSTRUCTIONS,
-                mode: 'text',
-                readOnly: true,
-            }
-        }
 
-        panels.push(self.renderMainTab(mainTabProps));
+        let tabs = [];
 
-        if(self.props.mapping) {
-            tabs.push(
-                <Tab key="mapping">
-                    {self.props.type}
-                </Tab>
-            );
-            panels.push(self.renderMappingTab());
-        }
+        if(self.props.doc)
+            tabs.push(this.renderDocTab());
+        else
+            tabs.push(this.renderInfoTab());
+
+        if(self.props.mapping)
+            tabs.push(this.renderMappingTab());
 
         return (
-            <section id="doc">
-                <Tabs selectedIndex={0}>
-                    <TabList>
-                        {tabs}
-                    </TabList>
-                    {panels}
+            <Paper zDepth={1} circle={false} rounded={true} style={{marginTop: 10}}>
+                <Tabs 
+                  value={this.state.tab}
+                  onChange={this.handleTabChange.bind(this)}
+                  inkBarStyle={{backgroundColor: '#00bcd4'}}
+                  contentContainerStyle={{padding: 5, border: '1px solid #ddd', borderRadius: '2px'}}>
+                    {tabs}
                 </Tabs>
-            </section>
+            </Paper>
         );
     }
 }

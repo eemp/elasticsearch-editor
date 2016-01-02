@@ -1,22 +1,46 @@
 import React from 'react'
 import { render } from 'react-dom'
 
+import Paper from 'material-ui/lib/paper'
+import Toolbar from 'material-ui/lib/toolbar/toolbar'
+import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title'
+import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group'
+import FontIcon from 'material-ui/lib/font-icon'
+import Popover from 'material-ui/lib/popover/popover'
+import TextField from 'material-ui/lib/text-field'
+import Divider from 'material-ui/lib/divider'
+import RaisedButton from 'material-ui/lib/raised-button'
+
+import colors from 'material-ui/lib/styles/colors'
+
 class Header extends React.Component {
-    componentDidMount() {
-        $(".button-collapse").sideNav();
-        $(".dropdown-button").dropdown({
-            hover: true,
-            constrain_width: false,
-            belowOrigin: true,
+    constructor() {
+        super();
+        this.state = {};
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.props.id !== nextProps.id ||
+            this.state.searchPopover !== nextState.searchPopover;
+    }
+
+    showSearchOptions(e) {
+        this.setState({
+            searchPopover: e.currentTarget,
         });
     }
 
-    shouldComponentUpdate(nextProps) {
-        return this.props.id !== nextProps.id;
+    hideSearchOptions(e) {
+        this.setState({
+            searchPopover: null,
+        });
     }
 
     handleSearch() {
-        this.props.handleFetchClick(this.refs.index.value, this.refs.type.value, this.refs.id.value);
+        this.props.handleFetchClick(this.refs.index.getValue(), this.refs.type.getValue(), this.refs.id.getValue());
+        this.setState({
+            searchPopover: null
+        });
     }
 
     handleRefresh() {
@@ -28,49 +52,32 @@ class Header extends React.Component {
     }
 
     render() {
-        // TODO: removed hardcoded default values for type and id inputs
         return (
-            <header>
-                <form id="search-dropdown" className="scribe-opts dropdown-content col s12">
-                    <div className="row">
-                        <div className="input-field col s12">
-                            <input id="index" type="text" ref="index" required></input>
-                            <label className="active" htmlFor="index">Index</label>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="input-field col s12">
-                            <input id="type" type="text" ref="type" required></input>
-                            <label className="active" htmlFor="type">Type</label>
-                        </div>
-                    </div>
-                    <div className="last row">
-                        <div className="input-field col s12">
-                            <input id="doc-id" type="text" ref="id" required></input>
-                            <label className="active" htmlFor="doc-id">ID</label>
-                        </div>
-                    </div>
-                    <div className="button row right-align">
-                        <a onClick={this.handleSearch.bind(this)} className="waves-effect waves-light btn">Retrieve</a>
-                    </div>
-                </form>
-                <nav className="teal lighten-1">
-                    <div className="nav-wrapper">
-                        <a className="brand-logo">{"{ editor }"}</a>
-                        <a href="#" data-activates="mobile-nav" className="button-collapse"><i className="material-icons">menu</i></a>
-                        <ul id="nav-mobile" className="right hide-on-med-and-down">
-                            <li><a href="#" className="dropdown-button" data-activates="search-dropdown"><i className="material-icons">search</i></a></li>
-                            <li><a href="#" onClick={this.handleRefresh.bind(this)}><i className="material-icons">refresh</i></a></li>
-                            <li><a href="#" onClick={this.handleSave.bind(this)}><i className="material-icons">done</i></a></li>
-                        </ul>
-                        <ul className="side-nav" id="mobile-nav">
-                            <li><a>Search</a></li>
-                            <li><a>Refresh</a></li>
-                            <li><a>Save</a></li>
-                        </ul>
-                    </div>
-                </nav>
-            </header>
+            <Paper zDepth={1} rounded={false} circle={false}>
+                <Toolbar style={{backgroundColor: colors.teal200}}>
+                    <ToolbarGroup firstChild={true} float="left">
+                        <ToolbarTitle text="{editor}" style={{left: 20}}/>
+                    </ToolbarGroup>
+                    <ToolbarGroup float="right">
+                        <FontIcon className="material-icons" onClick={this.showSearchOptions.bind(this)}>search</FontIcon>
+                        <FontIcon className="material-icons" onClick={this.handleRefresh.bind(this)}>refresh</FontIcon>
+                        <FontIcon className="material-icons" onClick={this.handleSave.bind(this)}>done</FontIcon>
+                    </ToolbarGroup>
+                </Toolbar>
+                <Popover open={this.state.searchPopover ? true : false}
+                    anchorEl={this.state.searchPopover}
+                    onRequestClose={this.hideSearchOptions.bind(this)}>
+                    <Paper style={{padding:20}} zDepth={1}>
+                        <TextField hintText="index" ref="index" fullWidth={true} underlineStyle={{display: 'none'}}/>
+                        <Divider/>
+                        <TextField hintText="type" ref="type" fullWidth={true} underlineStyle={{display: 'none'}}/>
+                        <Divider/>
+                        <TextField hintText="id" ref="id" fullWidth={true}  underlineStyle={{display: 'none'}}/>
+                        <Divider style={{marginBottom: 10}}/>
+                        <RaisedButton onClick={this.handleSearch.bind(this)} secondary={true} label="Retrieve"/>
+                    </Paper>
+                </Popover>
+            </Paper>
         );
     }
 }
