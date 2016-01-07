@@ -11,6 +11,9 @@ import { getDocument, getMapping, saveDocument, handleDocumentChange } from './a
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
+// set up some basic Elasticsearch information
+import './globals';
+
 class App extends React.Component {
     componentDidMount() {
         $(document).on('scroll', function() {
