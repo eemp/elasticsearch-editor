@@ -39,7 +39,11 @@ class Document extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        let updateFlag = (this.props.id !== nextProps.id || nextProps.force);
+        let updateFlag = (
+            this.props.id !== nextProps.id || 
+            this.state.tab !== nextState.tab ||
+            nextProps.force
+        );
         
         /* add a custom mapping based completer */
         if(updateFlag && nextProps.mapping) {
@@ -75,7 +79,7 @@ class Document extends React.Component {
         return (
             <Tab label={this.props.id} key="main" value="main" style={this.state.tab === 'main' ? activeTabStyles : inactiveTabStyles}>
                 <AceEditor
-                    value={JSON.stringify(this.props.doc, null, 2)}
+                    value={this.props.changed_doc || JSON.stringify(this.props.doc, null, 2)}
                     mode="json"
                     readOnly={false}
                     onChange={this.handleChange.bind(this)}
