@@ -16,6 +16,7 @@ import './globals';
 
 class App extends React.Component {
     componentDidMount() {
+        /* shrinking header
         $(document).on('scroll', function() {
             let header = $('header');
             let container = $('#app-container');
@@ -23,6 +24,7 @@ class App extends React.Component {
             if(header.offset().top > container.offset().top) header.addClass('shrink');
             else header.removeClass('shrink');
         });
+        */
     }
 
     render() {

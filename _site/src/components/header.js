@@ -88,12 +88,12 @@ class Header extends React.Component {
             <Paper zDepth={1} rounded={false} circle={false}>
                 <Toolbar style={{backgroundColor: colors.teal200}}>
                     <ToolbarGroup firstChild={true} float="left">
-                        <ToolbarTitle text="{editor}" style={{left: 20}}/>
+                        <ToolbarTitle text="{editor}" style={{left: 20, color: colors.white}}/>
                     </ToolbarGroup>
                     <ToolbarGroup float="right">
-                        <FontIcon className="material-icons" onClick={this.showSearchOptions.bind(this)}>search</FontIcon>
-                        <FontIcon className="material-icons" onClick={this.handleRefresh.bind(this)}>refresh</FontIcon>
-                        <FontIcon className="material-icons" onClick={this.handleSave.bind(this)}>done</FontIcon>
+                        <FontIcon className="material-icons" onClick={this.showSearchOptions.bind(this)} style={{color: colors.white}}>search</FontIcon>
+                        <FontIcon className="material-icons" onClick={this.handleRefresh.bind(this)} style={{color: colors.white}}>refresh</FontIcon>
+                        <FontIcon className="material-icons" onClick={this.handleSave.bind(this)} style={{color: colors.white}}>done</FontIcon>
                     </ToolbarGroup>
                 </Toolbar>
                 <Popover open={this.state.searchPopover ? true : false}

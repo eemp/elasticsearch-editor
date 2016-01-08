@@ -131,7 +131,7 @@ class Document extends React.Component {
             tabs.push(this.renderMappingTab());
 
         return (
-            <Paper zDepth={1} circle={false} rounded={true} style={{marginTop: 10}}>
+            <Paper zDepth={0} circle={false} rounded={true}>
                 <Tabs 
                   value={this.state.tab}
                   onChange={this.handleTabChange.bind(this)}
