@@ -14,7 +14,7 @@ global.host = host;
 global.esclient = esclient;
 
 let indices = [],
-    aliases = [],
+    aliases = {},
     mappings = {};
 
 global.indices = indices;
@@ -39,12 +39,14 @@ function getIndicesInformation() {
         // indices.splice(0, indices.length, ...curr_indices);
         global.indices = curr_indices;
 
-        let curr_aliases = [];
+        let curr_aliases = {};
         for(let idx in res) {
-            curr_aliases = curr_aliases.concat(Object.keys(res[idx].aliases));
+            curr_aliases = Object.keys(res[idx].aliases).reduce(function(map, alias) {
+                map[alias] = idx;
+                return map;
+            }, curr_aliases);
         }
 
-        // aliases.splice(0, aliases.length, ...curr_aliases);
         global.aliases = curr_aliases;
     });
 }
