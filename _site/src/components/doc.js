@@ -5,6 +5,8 @@ import Paper from 'material-ui/lib/paper'
 import Tabs from 'material-ui/lib/tabs/tabs'
 import Tab from 'material-ui/lib/tabs/tab'
 
+import colors from 'material-ui/lib/styles/colors'
+
 import ace from 'brace'
 import AceEditor from 'react-ace'
 import 'brace/mode/json'
@@ -21,7 +23,7 @@ let mappingBasedCompleter = mpc.aceCompleter();
 langTools.addCompleter(mappingBasedCompleter);
 
 const activeTabStyles = {
-    backgroundColor: 'rgb(232,232,232)', 
+    backgroundColor: '#fff', 
     color: 'rgba(0, 0, 0, .40)',
 }, inactiveTabStyles = {
     backgroundColor: '#fff', 
@@ -135,7 +137,7 @@ class Document extends React.Component {
                 <Tabs 
                   value={this.state.tab}
                   onChange={this.handleTabChange.bind(this)}
-                  inkBarStyle={{backgroundColor: '#00bcd4'}}
+                  inkBarStyle={{backgroundColor: colors.cyan700}}
                   contentContainerStyle={{padding: 5, border: '1px solid #ddd', borderRadius: '2px'}}>
                     {tabs}
                 </Tabs>
