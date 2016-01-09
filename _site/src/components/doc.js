@@ -24,10 +24,17 @@ langTools.addCompleter(mappingBasedCompleter);
 
 const activeTabStyles = {
     backgroundColor: '#fff', 
-    color: 'rgba(0, 0, 0, .40)',
+    color: 'rgba(0, 0, 0, .90)',
+    border: '1px solid #ddd',
+    borderBottom: '2px solid ' + colors.cyan700,
+    paddingLeft: '10px',
+    paddingRight: '10px',
 }, inactiveTabStyles = {
     backgroundColor: '#fff', 
-    color: 'rgba(0, 0, 0, .40)',
+    color: 'rgba(0, 0, 0, .65)',
+    border: '1px solid #ddd',
+    paddingLeft: '10px',
+    paddingRight: '10px',
 };
 
 class Document extends React.Component {
@@ -79,7 +86,7 @@ class Document extends React.Component {
 
     renderDocTab() {
         return (
-            <Tab label={this.props.id} key="main" value="main" style={this.state.tab === 'main' ? activeTabStyles : inactiveTabStyles}>
+            <Tab label={[this.props.type, this.props.id].join('/')} key="main" value="main" style={this.state.tab === 'main' ? activeTabStyles : inactiveTabStyles}>
                 <AceEditor
                     value={this.props.changed_doc || JSON.stringify(this.props.doc, null, 2)}
                     mode="json"
@@ -133,11 +140,12 @@ class Document extends React.Component {
             tabs.push(this.renderMappingTab());
 
         return (
-            <Paper zDepth={0} circle={false} rounded={true}>
+            <Paper zDepth={0} circle={false} rounded={true} style={{marginTop: '10px'}}>
                 <Tabs 
                   value={this.state.tab}
                   onChange={this.handleTabChange.bind(this)}
-                  inkBarStyle={{backgroundColor: colors.cyan700}}
+                  inkBarStyle={{display: 'none', backgroundColor: colors.cyan700}}
+                  tabItemContainerStyle={{width: 'auto'}}
                   contentContainerStyle={{padding: 5, border: '1px solid #ddd', borderRadius: '2px'}}>
                     {tabs}
                 </Tabs>
