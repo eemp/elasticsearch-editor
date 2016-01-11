@@ -13,6 +13,7 @@ function receiveDocument(response) {
 }
 
 function receiveMapping(index, type, response) {
+    index = aliases[index] ? aliases[index] : index;
     return {
         type: GET_MAPPING,
         data: {
