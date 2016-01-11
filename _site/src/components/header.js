@@ -70,7 +70,7 @@ class Header extends React.Component {
 
         switch(key) {
             case 'index' :
-                stateUpdate.mappingOpts = this.getMappingOpts(t);
+                stateUpdate.mappingOpts = this.getMappingOpts(t).sort();
                 break;
             case 'mapping' :
                 // figure out id autocompletes?  but, too many
@@ -100,9 +100,9 @@ class Header extends React.Component {
                     anchorEl={this.state.searchPopover}
                     onRequestClose={this.hideSearchOptions.bind(this)}>
                     <Paper style={{padding:20}} zDepth={1}>
-                        <Autocomplete hintText="index" onUpdateInput={indexUpdate} onNewRequest={indexUpdate} dataSource={indices.concat(Object.keys(aliases))} ref="index" fullWidth={true} underlineStyle={{display: 'none'}}/>
+                        <Autocomplete hintText="index" onNewRequest={indexUpdate} dataSource={indices.concat(Object.keys(aliases)).sort()} ref="index" fullWidth={true} underlineStyle={{display: 'none'}}/>
                         <Divider/>
-                        <Autocomplete hintText="type" onUpdateInput={typeUpdate} onNewRequest={typeUpdate} dataSource={this.state.mappingOpts} ref="type" fullWidth={true} underlineStyle={{display: 'none'}}/>
+                        <Autocomplete hintText="type" onNewRequest={typeUpdate} dataSource={this.state.mappingOpts} ref="type" fullWidth={true} underlineStyle={{display: 'none'}}/>
                         <Divider/>
                         <TextField hintText="id" ref="id" fullWidth={true}  underlineStyle={{display: 'none'}}/>
                         <Divider style={{marginBottom: 10}}/>
