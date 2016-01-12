@@ -14,17 +14,18 @@ injectTapEventPlugin();
 // set up some basic Elasticsearch information
 import './globals';
 
+const TEST_INDEX = 'test-index';
+const TEST_MAPPING = 'test-mapping-1';
+const TEST_DOC = 2;
+
 class App extends React.Component {
     componentDidMount() {
-        /* shrinking header
-        $(document).on('scroll', function() {
-            let header = $('header');
-            let container = $('#app-container');
-
-            if(header.offset().top > container.offset().top) header.addClass('shrink');
-            else header.removeClass('shrink');
-        });
-        */
+        let dispatch = this.props.dispatch;
+        
+        if(!document.location.href.match(/_plugin/)) { // dev mode
+            dispatch(getDocument(TEST_INDEX, TEST_MAPPING, TEST_DOC));
+            dispatch(getMapping(TEST_INDEX, TEST_MAPPING));
+        }
     }
 
     render() {
