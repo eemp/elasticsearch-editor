@@ -7,8 +7,16 @@ import Document from './components/doc';
 
 import { getDocument, getMapping, saveDocument, handleDocumentChange } from './actions';
 
+// following 2 lines necessary to make tabs work
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
+// set up some basic Elasticsearch information
+import './globals';
+
 class App extends React.Component {
     componentDidMount() {
+        /* shrinking header
         $(document).on('scroll', function() {
             let header = $('header');
             let container = $('#app-container');
@@ -16,6 +24,7 @@ class App extends React.Component {
             if(header.offset().top > container.offset().top) header.addClass('shrink');
             else header.removeClass('shrink');
         });
+        */
     }
 
     render() {

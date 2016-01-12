@@ -24,11 +24,12 @@
   "dependencies": {
     "brace": "^0.7.0",
     "elasticsearch": "^10.0.1",
+    "material-ui": "^0.14.0",
     "react": "^0.14.3",
     "react-ace": "^2.8.0",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.5",
-    "react-tabs": "^0.5.1",
+    "react-tap-event-plugin": "^0.2.1",
     "redux": "^3.0.5",
     "redux-thunk": "^1.0.3"
   },
