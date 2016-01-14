@@ -2,8 +2,6 @@ import React from 'react'
 import { render } from 'react-dom'
 
 import Paper from 'material-ui/lib/paper'
-import Tabs from 'material-ui/lib/tabs/tabs'
-import Tab from 'material-ui/lib/tabs/tab'
 
 import colors from 'material-ui/lib/styles/colors'
 
@@ -22,35 +20,10 @@ let mpc = new MappingPropsCompleter();
 let mappingBasedCompleter = mpc.aceCompleter();
 langTools.addCompleter(mappingBasedCompleter);
 
-const activeTabStyles = {
-    backgroundColor: '#fff', 
-    color: 'rgba(0, 0, 0, .90)',
-    border: '1px solid #ddd',
-    borderBottom: '2px solid ' + colors.cyan700,
-    paddingLeft: '10px',
-    paddingRight: '10px',
-}, inactiveTabStyles = {
-    backgroundColor: '#fff', 
-    color: 'rgba(0, 0, 0, .65)',
-    border: '1px solid #ddd',
-    paddingLeft: '10px',
-    paddingRight: '10px',
-};
-
 class Document extends React.Component {
-    constructor() {
-        super();
-        this.state = { tab: 'main' };
-    }
-    
-    componentDidMount() {
-        this.refs.main.editor.setOption('enableBasicAutocompletion', true);
-    }
-
     shouldComponentUpdate(nextProps, nextState) {
         let updateFlag = (
             this.props.id !== nextProps.id || 
-            this.state.tab !== nextState.tab ||
             nextProps.force
         );
         
@@ -62,13 +35,19 @@ class Document extends React.Component {
         return updateFlag;
     }
 
+    componentDidUpdate() {
+        console.info('Enabling basic autocompletion...');
+
+        this.refs.main.editor.setOption('enableBasicAutocompletion', true);
+    }
+
     handleChange(newValue) {
         this.props.handleDocumentChange(newValue);
     }
 
-    renderInfoTab() {
+    renderInfo() {
         return (
-            <Tab label="info" key="main" value="main" style={this.state.tab === 'main' ? activeTabStyles : inactiveTabStyles}>
+            <Paper zDepth={1} circle={false} rounded={false} key="info" style={{width: '99vw'}}>
                 <AceEditor
                     value={INSTRUCTIONS}
                     mode="text"
@@ -80,13 +59,13 @@ class Document extends React.Component {
                     editorProps={{$blockScrolling: Infinity}}
                     ref="main"
                 />
-            </Tab>
+            </Paper>
         );
     }
 
-    renderDocTab() {
+    renderDoc() {
         return (
-            <Tab label={[this.props.type, this.props.id].join('/')} key="main" value="main" style={this.state.tab === 'main' ? activeTabStyles : inactiveTabStyles}>
+            <Paper zDepth={1} circle={false} rounded={false} key="main" style={{width: '50%', float: 'left', padding: '5px'}}>
                 <AceEditor
                     value={this.props.changed_doc || JSON.stringify(this.props.doc, null, 2)}
                     mode="json"
@@ -99,13 +78,13 @@ class Document extends React.Component {
                     editorProps={{$blockScrolling: Infinity}}
                     ref="main"
                 />
-            </Tab>
+            </Paper>
         );
     }
 
-    renderMappingTab() {
+    renderMapping() {
         return (
-            <Tab label={this.props.type} key="mapping" value="mapping" style={this.state.tab === 'mapping' ? activeTabStyles : inactiveTabStyles}>
+            <Paper zDepth={1} circle={false} rounded={false} key="mapping" style={{width: '50%', float: 'right', padding: '5px'}}>
                 <AceEditor
                     mode="json"
                     theme="github"
@@ -116,7 +95,7 @@ class Document extends React.Component {
                     editorProps={{$blockScrolling: Infinity}}
                     value={JSON.stringify(this.props.mapping, null, 4)}
                 />
-            </Tab>
+            </Paper>
         );
     }
 
@@ -127,28 +106,13 @@ class Document extends React.Component {
     }
 
     render() {
-        let self = this;
-
-        let tabs = [];
-
-        if(self.props.doc)
-            tabs.push(this.renderDocTab());
-        else
-            tabs.push(this.renderInfoTab());
-
-        if(self.props.mapping)
-            tabs.push(this.renderMappingTab());
+        let docs = this.props.doc && this.props.mapping ?
+            [this.renderDoc(), this.renderMapping()] : 
+            [this.renderInfo()];
 
         return (
             <Paper zDepth={0} circle={false} rounded={true} style={{marginTop: '10px'}}>
-                <Tabs 
-                  value={this.state.tab}
-                  onChange={this.handleTabChange.bind(this)}
-                  inkBarStyle={{display: 'none', backgroundColor: colors.cyan700}}
-                  tabItemContainerStyle={{width: 'auto'}}
-                  contentContainerStyle={{padding: 5, border: '1px solid #ddd', borderRadius: '2px'}}>
-                    {tabs}
-                </Tabs>
+                {docs}
             </Paper>
         );
     }
