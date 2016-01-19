@@ -46,6 +46,7 @@ npm run watch-css
 * Refactor entire plugin
  * support editing of multiple docs
  * vertical split - show doc + mapping
+ * support YAML by default
 * basic functionality
  * create
  * delete

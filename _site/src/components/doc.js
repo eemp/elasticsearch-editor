@@ -36,8 +36,6 @@ class Document extends React.Component {
     }
 
     componentDidUpdate() {
-        console.info('Enabling basic autocompletion...');
-
         this.refs.main.editor.setOption('enableBasicAutocompletion', true);
     }
 
