@@ -45,7 +45,7 @@ class Document extends React.Component {
 
     renderInfo() {
         return (
-            <Paper zDepth={1} circle={false} rounded={false} key="info" style={{width: '99vw'}}>
+            <Paper zDepth={1} circle={false} rounded={false} key="info" style={{width: '99vw', height: '100%'}}>
                 <AceEditor
                     value={INSTRUCTIONS}
                     mode="text"
@@ -53,6 +53,7 @@ class Document extends React.Component {
                     theme="github"
                     name="info-editor"
                     width="100%"
+                    height="100%"
                     showPrintMargin={false}
                     editorProps={{$blockScrolling: Infinity}}
                     ref="main"
@@ -63,7 +64,7 @@ class Document extends React.Component {
 
     renderDoc() {
         return (
-            <Paper zDepth={1} circle={false} rounded={false} key="main" style={{width: '50%', float: 'left', padding: '5px'}}>
+            <Paper zDepth={1} circle={false} rounded={false} key="main" style={{width: '50%', height: '100%', float: 'left', padding: '5px'}}>
                 <AceEditor
                     value={this.props.changed_doc || JSON.stringify(this.props.doc, null, 2)}
                     mode="json"
@@ -72,6 +73,7 @@ class Document extends React.Component {
                     theme="github"
                     name="doc-editor"
                     width="100%"
+                    height="100%"
                     showPrintMargin={false}
                     editorProps={{$blockScrolling: Infinity}}
                     ref="main"
@@ -82,12 +84,13 @@ class Document extends React.Component {
 
     renderMapping() {
         return (
-            <Paper zDepth={1} circle={false} rounded={false} key="mapping" style={{width: '50%', float: 'right', padding: '5px'}}>
+            <Paper zDepth={1} circle={false} rounded={false} key="mapping" style={{width: '50%', height: '100%', float: 'right', padding: '5px'}}>
                 <AceEditor
                     mode="json"
                     theme="github"
                     name="mapping-editor"
                     width="100%"
+                    height="100%"
                     showPrintMargin={false}
                     readOnly={true}
                     editorProps={{$blockScrolling: Infinity}}
@@ -109,7 +112,7 @@ class Document extends React.Component {
             [this.renderInfo()];
 
         return (
-            <Paper zDepth={0} circle={false} rounded={true} style={{marginTop: '10px'}}>
+            <Paper zDepth={0} circle={false} rounded={true} style={{marginTop: '60px', position: 'fixed', left: 0, top: 0, height: '90vh', width: '100vw'}}>
                 {docs}
             </Paper>
         );
