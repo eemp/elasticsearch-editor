@@ -14,6 +14,7 @@ import RaisedButton from 'material-ui/lib/raised-button'
 import colors from 'material-ui/lib/styles/colors'
 
 import Path from './path'
+import SettingsDialog from './settings-dialog'
 
 class Header extends React.Component {
     constructor() {
@@ -23,11 +24,12 @@ class Header extends React.Component {
             mapping: '',
             id: '',
             mappingOpts: [],
+            settings_dialog_open: false,
         };
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return false;
+        return this.state.settings_dialog_open !== nextState.settings_dialog_open;
     }
 
     handleRefresh() {
@@ -36,6 +38,14 @@ class Header extends React.Component {
 
     handleSave() {
         this.props.handleSaveClick(this.props.changed_doc);
+    }
+
+    showSettingsDialog() {
+        this.setState({settings_dialog_open: true});
+    }
+
+    closeSettingsDialog() {
+        this.setState({settings_dialog_open: false});
     }
 
     render() {
@@ -49,8 +59,10 @@ class Header extends React.Component {
                     <ToolbarGroup float="right">
                         <FontIcon className="material-icons" onClick={this.handleRefresh.bind(this)}>refresh</FontIcon>
                         <FontIcon className="material-icons" onClick={this.handleSave.bind(this)}>done</FontIcon>
+                        <FontIcon className="material-icons" onClick={this.showSettingsDialog.bind(this)}>settings</FontIcon>
                     </ToolbarGroup>
                 </Toolbar>
+                <SettingsDialog open={this.state.settings_dialog_open} close={this.closeSettingsDialog.bind(this)}/>
             </Paper>
         );
     }
