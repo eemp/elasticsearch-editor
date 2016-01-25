@@ -8,10 +8,13 @@ import colors from 'material-ui/lib/styles/colors'
 import ace from 'brace'
 import AceEditor from 'react-ace'
 import 'brace/mode/json'
+import 'brace/mode/yaml'
 import 'brace/theme/github'
 
 import 'brace/ext/language_tools'
 let langTools = ace.acequire('ace/ext/language_tools');
+
+import yaml from 'js-yaml'
 
 import { INSTRUCTIONS } from '../constants'
 
@@ -63,11 +66,16 @@ class Document extends React.Component {
     }
 
     renderDoc() {
+        let val = this.props.changed_doc || (
+            this.props.mode === 'yaml' ? 
+                yaml.dump(this.props.doc) : 
+                JSON.stringify(this.props.doc, null, 2)
+        );
         return (
             <Paper zDepth={1} circle={false} rounded={false} key="main" style={{width: '50%', height: '100%', float: 'left', padding: '5px'}}>
                 <AceEditor
-                    value={this.props.changed_doc || JSON.stringify(this.props.doc, null, 2)}
-                    mode="json"
+                    value={val}
+                    mode={this.props.mode}
                     readOnly={false}
                     onChange={this.handleChange.bind(this)}
                     theme="github"
@@ -83,10 +91,13 @@ class Document extends React.Component {
     }
 
     renderMapping() {
+        let val = this.props.mode === 'yaml' ? 
+                yaml.dump(this.props.mapping) : 
+                JSON.stringify(this.props.mapping, null, 2);
         return (
             <Paper zDepth={1} circle={false} rounded={false} key="mapping" style={{width: '50%', height: '100%', float: 'right', padding: '5px'}}>
                 <AceEditor
-                    mode="json"
+                    mode={this.props.mode}
                     theme="github"
                     name="mapping-editor"
                     width="100%"
@@ -94,16 +105,10 @@ class Document extends React.Component {
                     showPrintMargin={false}
                     readOnly={true}
                     editorProps={{$blockScrolling: Infinity}}
-                    value={JSON.stringify(this.props.mapping, null, 4)}
+                    value={val}
                 />
             </Paper>
         );
-    }
-
-    handleTabChange(val) {
-        this.setState({
-            tab: val
-        });
     }
 
     render() {

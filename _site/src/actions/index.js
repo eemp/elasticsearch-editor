@@ -1,4 +1,4 @@
-import { GET_DOC, GET_MAPPING, DOC_CHANGE, SAVE_DOC } from '../constants';
+import { GET_DOC, GET_MAPPING, DOC_CHANGE, SAVE_DOC, SETTINGS_CHANGE } from '../constants';
 
 function receiveDocument(response) {
     return {
@@ -76,6 +76,13 @@ export function handleDocumentChange(text) {
         data: {
             changed_doc: text,
         }
+    };
+}
+
+export function updateSettings(data) {
+    return {
+        type: SETTINGS_CHANGE,
+        data
     };
 }
 

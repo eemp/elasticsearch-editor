@@ -62,7 +62,7 @@ class Header extends React.Component {
                         <FontIcon className="material-icons" onClick={this.showSettingsDialog.bind(this)}>settings</FontIcon>
                     </ToolbarGroup>
                 </Toolbar>
-                <SettingsDialog open={this.state.settings_dialog_open} close={this.closeSettingsDialog.bind(this)}/>
+                <SettingsDialog {...this.props} open={this.state.settings_dialog_open} close={this.closeSettingsDialog.bind(this)}/>
             </Paper>
         );
     }

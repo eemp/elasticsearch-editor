@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Header from './components/header';
 import Document from './components/doc';
 
-import { getDocument, getMapping, saveDocument, handleDocumentChange } from './actions';
+import { getDocument, getMapping, saveDocument, handleDocumentChange, updateSettings } from './actions';
 
 // following 2 lines necessary to make tabs work
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -25,6 +25,7 @@ class App extends React.Component {
         if(!document.location.href.match(/_plugin/)) { // dev mode
             dispatch(getDocument(TEST_INDEX, TEST_MAPPING, TEST_DOC));
             dispatch(getMapping(TEST_INDEX, TEST_MAPPING));
+            dispatch(updateSettings({mode: 'yaml'}));
         }
     }
 
@@ -40,6 +41,9 @@ class App extends React.Component {
                 } handleFetchClick={(index, type, id) => {
                         dispatch(getDocument(index, type, id));
                         dispatch(getMapping(index, type));
+                    }
+                } handleSettingsChange={(update) => {
+                        dispatch(updateSettings(update));
                     }
                 } />
                 <Document {...this.props} handleDocumentChange={text =>
@@ -60,6 +64,7 @@ function select(state) {
         mapping: data.mapping,
         changed_doc: data.changed_doc,
         force: data.force,
+        mode: data.mode,
     };
 }
 
