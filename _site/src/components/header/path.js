@@ -44,7 +44,6 @@ class Path extends React.Component {
     autocompleteMapping(input, cb) {
         let index = aliases[this.state.index] || this.state.index;
         let opts = Object.keys(mappings[index].mappings).sort();
-        console.log(index, opts);
         for(let k = 0; k < opts.length; k++) {
             if(opts[k].indexOf(input) === 0) return cb(null, opts[k]);
         }

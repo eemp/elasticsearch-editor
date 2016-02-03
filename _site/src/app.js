@@ -2,6 +2,8 @@ import React from 'react';
 
 import { connect } from 'react-redux'
 
+import yaml from 'js-yaml'
+
 import Header from './components/header';
 import Document from './components/doc';
 
@@ -35,7 +37,14 @@ class App extends React.Component {
         return (
             <div id="app" >
                 <Header {...this.props} handleSaveClick={(data) => {
-                        dispatch(saveDocument(this.props.index, this.props.type, this.props.id, data))
+                        dispatch(saveDocument(
+                            this.props.index,
+                            this.props.type,
+                            this.props.id,
+                            this.props.mode === 'json' ?
+                                JSON.parse(data):
+                                yaml.load(data)
+                        ));
                         dispatch(getMapping(index, type));
                     }
                 } handleFetchClick={(index, type, id) => {

@@ -51,15 +51,13 @@ export function getMapping(index, type) {
     };
 }
 
-export function saveDocument(index, type, id, text) {
-    var updatedDoc = JSON.parse(text);
-
+export function saveDocument(index, type, id, data) {
     return dispatch => {
         return esclient.index({
             index: index,
             type: type,
             id: id,
-            body: updatedDoc
+            body: data
         }).then(res => {
             dispatch(receiveResponseToIndex(res));
 
